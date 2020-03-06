@@ -1,0 +1,41 @@
+<idea-plugin>
+    <id>com.viewrouter.helper.plugin</id>
+    <name>ViewRouterHelper</name>
+    <version>1.0</version>
+    <vendor email="wangping2@autoai.com" url="http://www.yourcompany.com">ViewRouterHelper</vendor>
+
+    <description><![CDATA[
+    1.0.0<br/>
+    Provides actions which allow you quickly move around the Arouter.(now it only for EventBus 3.x)
+    <ul>
+      <li><code>ViewRouter.routeToXXX</code> to <code>@Route(path = XXX)</code></li>
+    </ul>
+    为ViewRouter提供快速索引和跳转（目前只支持内部使用）
+    ]]>
+    </description>
+
+    <change-notes><![CDATA[
+      （1）在ViewRouter类中定义路由函数时，必须以routeTo开头。<br>
+      （2）函数的第一个参数必须为path路径<br>
+    ]]>
+    </change-notes>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+    <idea-version since-build="173.0"/>
+    <extensions defaultExtensionNs="com.intellij">
+        <codeInsight.lineMarkerProvider language="JAVA"
+                                        implementationClass="com.viewrouter.helper.plugin.ViewRouterHelperLineMarker"/>
+    </extensions>
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+    </actions>
+
+</idea-plugin>
