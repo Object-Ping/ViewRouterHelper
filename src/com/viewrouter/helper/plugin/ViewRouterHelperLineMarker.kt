@@ -5,6 +5,7 @@ import com.intellij.codeHighlighting.Pass.UPDATE_ALL
 import com.intellij.codeInsight.daemon.GutterIconNavigationHandler
 import com.intellij.codeInsight.daemon.LineMarkerInfo
 import com.intellij.codeInsight.daemon.LineMarkerProviderDescriptor
+import com.intellij.codeInsight.navigation.MethodImplementationsSearch
 import com.intellij.navigation.NavigationItem
 import com.intellij.notification.Notification
 import com.intellij.notification.NotificationType
@@ -14,9 +15,14 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.IconLoader
 
 import com.intellij.psi.*
+import com.intellij.psi.impl.search.MethodSuperSearcher
 import com.intellij.psi.impl.source.tree.java.PsiMethodCallExpressionImpl
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.search.searches.AnnotatedMembersSearch
+import com.intellij.psi.search.searches.ClassInheritorsSearch
+import com.intellij.psi.search.searches.ClassesWithAnnotatedMembersSearch
+import com.intellij.psi.search.searches.MethodReferencesSearch
+import com.intellij.refactoring.util.classRefs.ClassReferenceSearchingScanner
 import com.viewrouter.helper.plugin.Constants.Companion
 import java.awt.event.MouseEvent
 
@@ -167,6 +173,12 @@ class ViewRouterHelperLineMarker : LineMarkerProviderDescriptor() {
             notifyNotFound("psiElement=" + psiElement.toString())
             for (eventBus in eventBusClass) {
                 notifyNotFound("eventBus=" + eventBus.toString())
+            }
+            val fullScope = GlobalSearchScope.allScope(psiElement.project)
+            val viewRouterClass = JavaPsiFacade.getInstance(psiElement.project).findClass(Companion.HELP_ANNOTATION_NAME, fullScope)
+            if (viewRouterClass != null) {
+                val findAll = ClassesWithAnnotatedMembersSearch.search(viewRouterClass, fullScope).findAll()
+
             }
 //            val postMethod = eventBusClass!!.findMethodsByName(FUN_START, false)[0]
 
